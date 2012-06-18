@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.0">
+
+	<name>brafton2</name>
+	<creationDate>2011-05-26</creationDate>
+	<author>John Barber</author>
+	<authorEmail>john.barber@brafton</authorEmail>
+	<authorUrl>http://www.brafton.com</authorUrl>
+	<copyright>Copyright Info</copyright>
+	<license>License Info</license>
+	<version>1.0</version>
+	<description>brafton2 article importer</description>
+ 
+	<!-- Import site files -->
+	<files folder="site">
+		<filename>controller.php</filename>
+		<filename>brafton2.php</filename>
+		<filename>index.html</filename>
+		<filename>models/ApiHandler.php</filename>
+		<filename>models/brafton2.php</filename>
+		<filename>models/NewsCategory.php</filename>
+		<filename>models/NewsComment.php</filename>
+		<filename>models/NewsItem.php</filename>
+		<filename>models/Photo.php</filename>
+		<filename>models/PhotoInstance.php</filename>
+		<filename>models/XMLHandler.php</filename>
+		<filename>models/index.html</filename>
+		<filename>tables/brafton2.php</filename>
+		<filename>tables/joomcontent.php</filename>
+		<filename>tables/joomsection.php</filename>
+		<filename>views/index.html</filename>
+		<filename>views/brafton2/index.html</filename>
+		<filename>views/brafton2/view.html.php</filename>
+		<filename>views/brafton2/tmpl/default.php</filename>
+		<filename>views/brafton2/tmpl/default.xml</filename>
+		<filename>views/brafton2/tmpl/index.html</filename>
+	</files>
+ 
+	<!-- Install SQL tables -->
+	<install>
+		<sql>
+			<file charset="utf8" driver="mysql">install.sql</file>
+		</sql>
+	</install>
+
+	<!-- Uninstall SQL tables -->
+	<uninstall>
+		<sql>
+			<file charset="utf8" driver="mysql">uninstall.sql</file>
+		</sql>
+	</uninstall>
+	
+	<!-- Administration Main File Copy Section -->
+	<administration>
+		<files folder="admin">   
+			<filename>index.html</filename>
+			<filename>install.sql</filename>
+			<filename>uninstall.sql</filename>
+		</files>   
+	</administration>
+	
+</install>
