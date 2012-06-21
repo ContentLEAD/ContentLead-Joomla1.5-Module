@@ -8,4 +8,19 @@ jimport('joomla.application.component.controller');
 
 class Brafton2Controller extends JController
 {
+	/**
+	 * loads pictures
+	 * @return void
+	 */
+	function loadPictures()
+	{
+		$model = $this->getModel('brafton2');
+		if(!$model->loadpics()) {
+			$msg = JText::_( 'Error Uploading Pics' );
+		} else {
+			$msg = JText::_( 'Pics successfull uploaded' );
+		}
+	 
+		$this->setRedirect( 'index.php?option=com_brafton2', $msg );
+	}
 }

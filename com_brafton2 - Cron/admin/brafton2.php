@@ -1,12 +1,10 @@
 <?php
  
-
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+// import joomla controller library
 jimport('joomla.application.component.controller');
-ini_set('max_execution_time', 300); //300 seconds = 5 minutes
-
 require_once( JPATH_COMPONENT.DS.'controller.php' );
 
 
@@ -24,4 +22,5 @@ $controller	= new $classname( );
 
 $controller->execute( JRequest::getVar( 'task' ) );
 
-//$controller->redirect();
+// Redirect if set by the controller
+$controller->redirect();

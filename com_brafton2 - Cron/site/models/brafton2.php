@@ -14,7 +14,7 @@ class Brafton2ModelBrafton2 extends JModel{
 
 	
 	public function getTable($type = 'Brafton2', $prefix = 'Brafton2Table', $config = array()) 
-{
+	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
 	
@@ -136,9 +136,16 @@ class Brafton2ModelBrafton2 extends JModel{
 			return $itemrow->brafton_id;
 	}
 	
-	public function getXML(){		
+	public function getXML(){
+		$API_pattern = "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$";
 		$db = & JFactory::getDBO();	
-		$fh = new ApiHandler('eee83d24-906b-4736-91d9-1031621b85eb', "http://api.brafton.com");				
+		$feed_exists = $this->get_options("braf_api_key");
+		if($feed_exists && preg_match('/' . $API_pattern . '/', $feed_exists))
+			$API_KEY = $feed_exists;
+		else
+			return JText::_( 'Invalid API key.  Please double check the admin panel!' );
+		
+		$fh = new ApiHandler($API_KEY, "http://api.brafton.com");				
 		$articles = $fh->getNewsHTML();				
 		foreach ($articles as $a) {
 			JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');
@@ -197,8 +204,16 @@ class Brafton2ModelBrafton2 extends JModel{
 						$pic_URL = $photos[0]->getLarge()->getURL();						
 					}
 					
+					$pic_base = basename($pic_URL);
+					// Strip random numbers off of pictures
+					$firstPlace = strpos($pic_base, "_", 0);
+					$lastPlace = strrpos($pic_base, ".");
+					$pic_base = substr_replace($pic_base, '', $firstPlace - 1, $lastPlace - $firstPlace + 1);
+					
+					$destination_folder = "images/";
+					$picURL = $destination_folder . $pic_base;
 					$content->introtext = '<img src="'.$pic_thumb.'" border="0" align="left" />'.$post_excerpt;					
-					$content->fulltext = '<img src="'.$pic_URL.'" border="0" align="left" />'.$_content;
+					$content->fulltext = '<img src="'.$picURL.'" border="0" align="left" />'.$_content;
 				}		
 												
 //				$content->introtext = $post_excerpt;															
@@ -252,4 +267,66 @@ class Brafton2ModelBrafton2 extends JModel{
 		$itemrow = $rows[0]->options_value;
 		return $itemrow;
 	}	
-}
+	
+	function loadpics() 
+	{
+		$API_pattern = "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$";
+		$db = & JFactory::getDBO();	
+		$feed_exists = $this->get_options("braf_api_key");
+		if($feed_exists && preg_match('/' . $API_pattern . '/', $feed_exists))
+			$API_KEY = $feed_exists;
+		else
+			return JText::_( 'Invalid API key.  Please double check the admin panel!' );
+		
+		$fh = new ApiHandler($API_KEY, "http://api.brafton.com");				
+		$articles = $fh->getNewsHTML();				
+		foreach ($articles as $a)
+		{
+			JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');
+			// $brafton_id = $a->getId();
+			$photos = $a->getPhotos();	
+			if(empty($photos)) 
+			{
+				// No Photos Found
+			}
+			else 
+			{
+				if(($photos[0]->getMedium()->getURL() != "NULL"))
+				{
+					$pic_thumb = $photos[0]->getSmall()->getURL();
+					$pic_URL = $photos[0]->getMedium()->getURL();												
+				}
+				else
+				{
+					$pic_thumb = $photos[0]->getSmall()->getURL();
+					$pic_URL = $photos[0]->getLarge()->getURL();						
+				}		
+				$pic_base = basename($pic_URL);
+				
+				// Strip random numbers off of pictures
+				$firstPlace = strpos($pic_base, "_", 0);
+				$lastPlace = strrpos($pic_base, ".");
+				$pic_base = substr_replace($pic_base, '', $firstPlace - 1, $lastPlace - $firstPlace + 1);
+						
+				$destination_folder = "C:\\xampp\\htdocs\\joomla\\1.5curltest\\images\\" . $pic_base;
+				$file = fopen ($pic_URL, "rb");
+				
+				// Write pictures to the image folders
+				if ($file) 
+				{
+					$newf = fopen ($destination_folder, "wb");
+					if ($newf)
+						while(!feof($file)) 
+							fwrite($newf, fread($file, 1024 * 8 ), 1024 * 8 );
+				}
+
+				if ($file) 
+				  fclose($file);
+				if ($newf) 
+					fclose($newf);
+	
+			} //end else
+		} //end foreach 
+			return "Import successful";							
+	} //end loadpics()
+} // end class

@@ -3,13 +3,13 @@
 
 	<name>brafton2</name>
 	<creationDate>2011-05-26</creationDate>
-	<author>John Barber</author>
+	<author>John Barber/Mike Walton</author>
 	<authorEmail>john.barber@brafton</authorEmail>
 	<authorUrl>http://www.brafton.com</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>License Info</license>
-	<version>1.0</version>
-	<description>brafton2 article importer</description>
+	<version>1.5.1</version>
+	<description>Imports articles from Brafton XML Feeds.</description>
  
 	<!-- Import site files -->
 	<files folder="site">
@@ -56,6 +56,16 @@
 			<filename>index.html</filename>
 			<filename>install.sql</filename>
 			<filename>uninstall.sql</filename>
+			<filename>brafton2.php</filename>
+			<filename>controller.php</filename>
+			<filename>views/index.html</filename>
+			<filename>views/brafton2/index.html</filename>
+			<filename>views/brafton2/view.html.php</filename>
+			<filename>views/brafton2/tmpl/default.php</filename>
+			<filename>views/keyinput/view.html.php</filename>      
+			<filename>views/keyinput/index.html</filename>
+			<filename>views/keyinput/tmpl/default.php</filename>
+			<filename>models/brafton2.php</filename>
 		</files>   
 	</administration>
 	
