@@ -84,7 +84,7 @@ class Brafton2ModelBrafton2 extends JModel{
 				$result = $db->loadResult();
 				
 				
-				return array("cat_id"=> $id, "section"=> $section);
+				return array("cat_id"=> $itemrow->id, "section"=> $section);
 			}
 		}		
 	}
