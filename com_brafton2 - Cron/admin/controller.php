@@ -17,6 +17,21 @@ class Brafton2Controller extends JController
 		parent::display($cachable);
 	}
 	
+	/*function author()
+	{
+		$model = $this->getModel('brafton2');
+		if(!$model->delete()) {
+			$msg = JText::_( 'Error Removing Articles' );
+		} else {
+			$msg = JText::_( 'Deleted' );
+		}
+	 
+		$this->setRedirect( 'index.php?option=com_brafton2', $msg );
+	}*/
+	
+	
+	
+	
 	/**
 	 * remove record(s)
 	 * @return void
@@ -32,5 +47,6 @@ class Brafton2Controller extends JController
 	 
 		$this->setRedirect( 'index.php?option=com_brafton2', $msg );
 	}
+	
 }
 

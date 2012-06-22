@@ -124,6 +124,19 @@ class Brafton2ModelBrafton2 extends JModel{
 			return $itemrow->id;
 	}
 	
+	/*	enter_author()
+	 *	Enter the author into the post.  User will choose!!!
+	 *  PRE: User sets an author.
+	 *  POST: The author set is now the author of all Brafton posts.
+	 */
+	public function enter_author()
+	{
+		$db = & JFactory::getDBO();	
+		$query = 'SELECT name, id FROM #__users';
+		$db->setQuery($query);
+		$rows = $db->loadObjectList();
+	}
+	
 	public function post_exists($id){
 		$db = & JFactory::getDBO();
 		$query = "SELECT *"
@@ -226,6 +239,8 @@ class Brafton2ModelBrafton2 extends JModel{
 				$content->catid = $catid['cat_id'];				
 				$content->sectionid = $catid['section'];				
 				$content->created = $post_date;
+				$content->created_by = $this->get_options("author");
+				var_dump($content);
 				$content->store();
 			
 				$query = 'SELECT * FROM #__content ORDER BY id DESC LIMIT 1';
@@ -259,7 +274,7 @@ class Brafton2ModelBrafton2 extends JModel{
 	}
 	
 	function get_options($name){
-		$name = "braf_api_key";
+		//$name = "braf_api_key";
 		$db = & JFactory::getDBO();
 		$query = 'SELECT * FROM #__brafton_options  WHERE options_name = "'.$name.'"';
 		$db->setQuery($query);
@@ -308,7 +323,7 @@ class Brafton2ModelBrafton2 extends JModel{
 				$lastPlace = strrpos($pic_base, ".");
 				$pic_base = substr_replace($pic_base, '', $firstPlace - 1, $lastPlace - $firstPlace + 1);
 						
-				$destination_folder = "C:\\xampp\\htdocs\\joomla\\1.5curltest\\images\\" . $pic_base;
+				$destination_folder = "C:\\xampp\\htdocs\\joomla\\1.5\\images\\" . $pic_base;
 				$file = fopen ($pic_URL, "rb");
 				
 				// Write pictures to the image folders

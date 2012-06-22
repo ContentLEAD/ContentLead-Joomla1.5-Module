@@ -11,6 +11,7 @@ class Brafton2ViewBrafton2 extends JView
 {
 	function display($tpl = null) 
 	{
+		JToolBarHelper::title(   JText::_( 'Brafton Article Importer' ), 'generic.png' );
 		$this->status =& $this->get('API');
 	//	var_dump($this->status);
 	//	echo "HELLO HERE IT IS HELLO ". $_POST["braftonxml_API_input"]; 

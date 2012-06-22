@@ -11,6 +11,7 @@ class Brafton2ViewKeyInput extends JView
 {
 	function display($tpl = null) 
 	{
+		JToolBarHelper::title(   JText::_( 'Brafton Article Importer' ), 'generic.png' );
 		$this->status = $this->get('API');
 	   $this->status = JRequest::getVar('braftonxml_API_input');
 		parent::display($tpl);
@@ -25,5 +26,14 @@ class Brafton2ViewKeyInput extends JView
 		$rows = $db->loadObjectList();
 		$itemrow = $rows[0]->options_value;
 		return $itemrow;
+	}
+	
+	function get_authors()
+	{
+		$db = & JFactory::getDBO();	
+		$query = 'SELECT name, id FROM #__users';
+		$db->setQuery($query);
+		$rows = $db->loadObjectList();
+		return $rows;
 	}
 }

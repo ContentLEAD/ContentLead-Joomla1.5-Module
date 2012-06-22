@@ -52,6 +52,7 @@
 	
 	<!-- Administration Main File Copy Section -->
 	<administration>
+	<menu>Brafton Article Importer</menu>
 		<files folder="admin">   
 			<filename>index.html</filename>
 			<filename>install.sql</filename>

@@ -6,7 +6,7 @@
 	</layout>
 	<fields
 		name="request"
-		addfieldpath="/administrator/components/com_Brafton/models/fields"
+		addfieldpath="/administrator/components/com_Brafton2/models/fields"
 	>
 		<fieldset name="request">
 			<field
