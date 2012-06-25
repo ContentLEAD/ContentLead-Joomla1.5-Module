@@ -20,5 +20,11 @@ CREATE TABLE `#__brafton_options` (
   `options_value` VARCHAR(100) NULL,  
   PRIMARY KEY (`id`) 
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  
+ CREATE TABLE `#__brafton_pics` (
+  `id` INT(10) NULL AUTO_INCREMENT,  
+  `brafton_id` int(25) NOT NULL,  
+  PRIMARY KEY (`id`) 
+  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
  
  INSERT INTO `#__brafton_options` (`id`, `options_name`, `options_value`) VALUES (0, 'braf_api_key', 'Enter API Key');
