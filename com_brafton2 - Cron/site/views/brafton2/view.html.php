@@ -9,9 +9,10 @@ jimport('joomla.application.component.view');
 
 class Brafton2ViewBrafton2 extends JView
 {
+	// Show blog stuff here
 	function display($tpl = null) 
 	{
-		$this->status = $this->get('XML');
+		// $this->status = $this->get('XML');
 		parent::display($tpl);
 	
 	}	

@@ -8,6 +8,19 @@ jimport('joomla.application.component.controller');
 
 class Brafton2Controller extends JController
 {
+
+	function display($tpl = null)
+	{
+		parent::display();
+	}
+	
+	// do error checking here
+	function loadArticles()
+	{
+		$model = $this->getModel('brafton2');
+		$model->getXML();
+	}
+
 	/**
 	 * loads pictures
 	 * @return void
