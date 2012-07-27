@@ -1,13 +1,5 @@
 <h1> ContentLEAD Article Importer for Joomla! </h1>
 <h2> v0.5 </h2>
-
-<h3> Backwards Branch? </h3>
-<p><b> I know readme's aren't interesting, but you should at least read this paragraph before downloading.  Srsly.</b></p>
-<p> Welcome!  You're probably wondering what the hell 'backwards' means for a branch name.  Well, as you may know (or may not) our Joomla! article importers
-are currently split between versions, which kind of sucks.  This branch is meant to fix all of that :)</p>
-<p> I highly recommend using the <b>master</b> branch over this one, as it's still in development and partially experimental at the moment.</p>
-<p> Continue normal Readme stuff!</p>
-<hr/>
 <p><b> Please note that whatever version of this you grab, it's still in heavy development.  If you run into any issues, just contact whoever gave you this plugin.</b></p>
 
 <h3> What does it do? </h3>
