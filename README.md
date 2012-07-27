@@ -1,5 +1,5 @@
 <h1> ContentLEAD Article Importer for Joomla! </h1>
-<h2> v0.5 </h2>
+<h2>v0.5</h2>
 <p><b> Please note that whatever version of this you grab, it's still in heavy development.  If you run into any issues, just contact whoever gave you this plugin.</b></p>
 
 <h3> What does it do? </h3>
