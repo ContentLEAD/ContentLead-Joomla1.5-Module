@@ -9,11 +9,19 @@ jimport('joomla.application.component.view');
 
 class Brafton2ViewBrafton2 extends JView
 {
-	// Show blog stuff here
 	function display($tpl = null) 
 	{
-		// $this->status = $this->get('XML');
-		parent::display($tpl);
-	
-	}	
+		$items =& $this->get( 'Data');
+ 
+        $this->assignRef( 'items', $items );
+ 
+		parent::display($tpl);	
+		$this->setDocument();
+	}
+
+	protected function setDocument() 
+	{
+		$document = JFactory::getDocument();
+		$document->setTitle(JText::_('News'));
+	}
 }

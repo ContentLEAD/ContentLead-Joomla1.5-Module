@@ -12,7 +12,22 @@ define('COM_MEDIA_BASE', JPath::clean(JPATH_ROOT.DS.$params->get($path, 'images'
 include_once 'ApiHandler.php';
 
 class Brafton2ModelBrafton2 extends JModel{
+
+	var $_data;
 	
+	function getData(){    
+		
+		$query = 'SELECT #__content.id,#__content.title,#__content.alias,#__content.introtext  FROM #__content,#__brafton WHERE #__content.id = #__brafton.id';		
+		$this->_data = $this->_getList( $query );		
+		return $this->_data;
+	}
+		function getItems() 
+	{
+		// Create a new query object.
+		$db = JFactory::getDBO();
+	
+		return $itemrow;
+	}
 	protected $status;
 	const _TIME = 1;
 	

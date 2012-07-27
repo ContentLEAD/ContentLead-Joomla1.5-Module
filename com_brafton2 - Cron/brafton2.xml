@@ -68,6 +68,5 @@
 			<filename>views/keyinput/tmpl/default.php</filename>
 			<filename>models/brafton2.php</filename>
 		</files>   
-	</administration>
-	
+	</administration>	
 </install>
