@@ -7,7 +7,7 @@ JHTML::_('behavior.tooltip');
 <table>
 	<tr>
 		<td><?php echo JHTML::tooltip('This is the key provided by Brafton/ContentLEAD which is used to import articles', 'API Key', '', '<b><u>API Key</u></b>'); ?><br />
-			http://api.brafton.com/<input type="text" name="braftonxml_API_input" size=47 value="<?php echo $this->get_options(""); ?>"/> <br />
+			http://api.brafton.com/<input type="text" name="braftonxml_API_input" size=47 value="<?php echo $this->get_options("braf_api_key"); ?>"/> <br />
 		</td>
   	</tr>
 	<tr>
@@ -18,7 +18,11 @@ JHTML::_('behavior.tooltip');
 			<select name="author">
 				<?php $authors = $this->get_authors();
 					  foreach($authors as $author): ?>
-					  <option value="<?php echo $author->id; ?>"><?php echo $author->name; ?></option>
+					   <option 
+					  <?php if($this->get_options('author') == $author->id): ?>
+					  selected="selected"
+ 					  <?php endif; ?>
+					  value="<?php echo $author->id; ?>"><?php echo $author->name; ?></option>
 				<?php endforeach; ?>	  
 			</select>
 		</td>

@@ -6,8 +6,6 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.menu');
 jimport('joomla.database.table.category');
 
-include_once 'ApiHandler.php';
-
 class Brafton2ModelBrafton2 extends JModel{
 	
 	protected $status;
@@ -58,7 +56,7 @@ class Brafton2ModelBrafton2 extends JModel{
 		$db = & JFactory::getDBO();
 		$query = 'INSERT INTO #__brafton_options  (options_name, options_value) VALUES ("'.$name.'","'.$value.'")';
 		$db->setQuery($query);
-		$result = $db->loadResult();									
+		$db->query();								
 	}
 	
 	function check_set_feed($option, $key){
@@ -67,7 +65,7 @@ class Brafton2ModelBrafton2 extends JModel{
 					 'SET options_value = "'.$key.'"'.
 					 'WHERE options_name = "'. $option .'"';
 			$db->setQuery($query);
-			$result = $db->loadResult();									
+			$db->query();								
 	}
 	
 	function get_options($name){

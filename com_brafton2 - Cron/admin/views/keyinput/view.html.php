@@ -19,7 +19,7 @@ class Brafton2ViewKeyInput extends JView
 	}
 
 	function get_options($name){
-		$name = "braf_api_key";
+		//$name = "braf_api_key";
 		$db = & JFactory::getDBO();
 		$query = 'SELECT * FROM #__brafton_options  WHERE options_name = "'.$name.'"';
 		$db->setQuery($query);
