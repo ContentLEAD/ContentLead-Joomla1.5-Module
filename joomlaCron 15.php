@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL | E_STRICT);
-ini_set("display_errors", 1);
 ini_set('max_execution_time', 300); //300 seconds = 5 minutes
 $ch1 = curl_init();
 $ch2 = curl_init();
