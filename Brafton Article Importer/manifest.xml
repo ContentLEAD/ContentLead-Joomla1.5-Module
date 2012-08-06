@@ -3,13 +3,13 @@
 
 	<name>Brafton Articles</name>
 	<creationDate>2011-05-26</creationDate>
-	<author>John Barber/Mike Walton</author>
-	<authorEmail>john.barber@brafton</authorEmail>
+	<author>Brafton Inc.</author>
+	<authorEmail>michael.walton@contentlead.com</authorEmail>
 	<authorUrl>http://www.brafton.com</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>License Info</license>
-	<version>0.5.1</version>
-	<description>Imports articles from Brafton XML Feeds.</description>
+	<version>0.5.5</version>
+	<description>Imports articles from Brafton/ContentLEAD/Castleford XML Feeds.</description>
  
 	<!-- Import site files -->
 	<files folder="site">
@@ -63,6 +63,7 @@
 		</files>   
 	</administration>	
 	
+	<!-- Media folder for component, contains logos and stuff -->
 	<media destination="com_braftonarticles">
 		<folder>css</folder>
 		<folder>images</folder>
