@@ -59,7 +59,7 @@
 			<filename>views/keyinput/view.html.php</filename>      
 			<filename>views/keyinput/index.html</filename>
 			<filename>views/keyinput/tmpl/default.php</filename>
-			<filename>models/admin.php</filename>
+			<filename>models/keyinput.php</filename>
 		</files>   
 	</administration>	
 	
