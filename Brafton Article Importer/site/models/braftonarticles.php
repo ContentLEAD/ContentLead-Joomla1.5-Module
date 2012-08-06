@@ -1,7 +1,8 @@
 <?php
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
+error_reporting(E_ALL );
+ini_set("display_errors", 1);
 jimport('joomla.application.menu');
 jimport('joomla.database.table.category');
 
@@ -16,6 +17,21 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 	var $_data;
 	protected $status;
 	const _TIME = 1;
+	
+	public function getTable($type = 'Brafton2', $prefix = 'Brafton2Table', $config = array()) 
+	{
+		return JTable::getInstance($type, $prefix, $config);
+	}
+
+	public function getTableContent($type = 'JoomContent', $prefix = 'JoomContentTable', $config = array()) 
+	{
+		return JTable::getInstance($type, $prefix, $config);
+	}
+
+	public function setTableSection($type = 'JoomSection', $prefix = 'JoomSectionTable', $config = array()) 
+	{
+		return JTable::getInstance($type, $prefix, $config);
+	}
 	
 	function getData(){    
 		
@@ -69,7 +85,9 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$category->published = 1;
 				$category->ordering = $lastorder +1;
 				$category->access = 0; 
-				$category->store();
+				if (!$category->store()) {
+					JError::raiseError(500, $row->getError() );
+				}
 				
 				$query = 'SELECT * FROM #__categories ORDER BY id DESC LIMIT 1';
 				$db->setQuery($query);
@@ -79,9 +97,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$section = $this->enter_section();
 				$query = 'INSERT INTO #__brafton_categories (id, section_id, brafton_cat_id) VALUES ('.$itemrow->id.','.$section.','.$cat_id.')';
 				$db->setQuery($query);
-				$result = $db->loadResult();
-				
-				
+				$db->query();
 				return array("cat_id"=> $itemrow->id, "section"=> $section);
 			}
 		}		
@@ -199,7 +215,6 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$time = $a->getCreatedDate();
 				$publish = $a->getPublishDate();
 				$_content = $a->getText();
-				
 				$photos = $a->getPhotos();
 				$post_excerpt = $a->getExtract();
 				$category = $a->getCategories();
@@ -308,7 +323,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 		$db = & JFactory::getDBO();
 		$query = 'INSERT INTO #__brafton_options  (options_name, options_value) VALUES ("'.$name.'","'.$value.'")';
 		$db->setQuery($query);
-		$result = $db->loadResult();									
+		$db->query();									
 	}
 	
 	function check_set_feed($key){
@@ -316,8 +331,8 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 		$query = 'UPDATE #__brafton_options '.
 					 'SET options_value = "'.$key.'"'.
 					 'WHERE options_name = "braf_api_key"';
-			$db->setQuery($query);
-			$result = $db->loadResult();									
+		$db->setQuery($query);
+		$db->query();							
 	}
 	
 	function get_options($name){
@@ -384,7 +399,6 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 					$pic_base = substr_replace($pic_base, '', $firstPlace - 1, $lastPlace - $firstPlace + 1);
 							
 					$destination_folder = COM_MEDIA_BASE . DS . $pic_base;
-					//var_dump(copy($pic_URL, $destination_folder));
 					
 					if(!copy($pic_URL, $destination_folder))
 						echo "failed to copy $pic_URL";
@@ -392,33 +406,11 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 					{
 						$query = 'INSERT INTO #__brafton_pics  (brafton_id) VALUES ("' . $brafton_id . '")';
 						$db->setQuery($query);
-						$result = $db->loadResult();	
+						$db->query();
 					}
-					
-					/*$file = fopen ($pic_URL, "rb");
-					
-					// Write pictures to the image folders
-					if ($file) 
-					{
-						$newf = fopen ($destination_folder, "wb");
-						if ($newf)
-						{
-							while(!feof($file)) 
-								fwrite($newf, fread($file, 1024 * 8 ), 1024 * 8 );
-							
-							$query = 'INSERT INTO #__brafton_pics  (brafton_id) VALUES ("' . $brafton_id . '")';
-							$db->setQuery($query);
-							$result = $db->loadResult();	
-						}
-					}
-
-					if ($file) 
-					  fclose($file);
-					if ($newf) 
-						fclose($newf);*/
-		
 				} //end else
 			} // end if
+			// Timing debugging
 			if(self::_TIME)
 			{
 				$photo_end = microtime(true);
@@ -426,6 +418,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				echo "Importing photo " . $brafton_id . " took " . $photo_time . "<br><br>";
 			}
 		} //end foreach 
+		// Timing debugging
 		if(self::_TIME)
 		{
 			$time_end = microtime(true);

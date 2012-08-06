@@ -30,6 +30,7 @@
 		<filename>views/articles/view.html.php</filename>
 		<filename>views/articles/tmpl/default.php</filename>
 		<filename>views/articles/tmpl/index.html</filename>
+		<folder>tables</folder>
 	</files>
  
 	<!-- Install SQL tables -->
