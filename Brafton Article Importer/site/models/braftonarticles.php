@@ -14,7 +14,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 
 	var $_data;
 	protected $status;
-	const _TIME = 1;
+	const _TIME = 0;
 	
 	public function getTable($type = 'Brafton2', $prefix = 'Brafton2Table', $config = array()) 
 	{
