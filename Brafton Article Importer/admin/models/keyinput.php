@@ -2,24 +2,22 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-
 jimport('joomla.application.menu');
 jimport('joomla.database.table.category');
+jimport( 'joomla.error.error' );
 
 class BraftonArticlesModelKeyInput extends JModel{
 	
 	protected $status;
 	
-	/*	getAPI()
-	 *	Misnomer function name for Joomla! compatibility
-	 *  I don't the weird name is necessary, but I'm trying to preserve legacy code so stuff doesn't break
-	 *  Anyway, this function SETS the API key into the database, which is necessary for the component to use
+	/*	setOptions()
+	 *  This function sets the API key and author into the database, which is necessary for the component to use
 	 *
 	 *  PRE: $_POST['braftonxml_API_input'] is the user input from admin panel (see /admin/views/keyinput/tmpl/default.php)
 	 *  POST: Sets the API key into the database (table #__brafton_options)
 	 */
 	
-	public function getAPI(){	
+	public function setOptions(){	
 		$API_pattern = "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$";		// pattern for regex check
 		$db = & JFactory::getDBO();
 		$options = JRequest::get('post');
@@ -36,7 +34,7 @@ class BraftonArticlesModelKeyInput extends JModel{
 		} //end if
 		else
 		{
-			echo "Please enter valid API key";
+			JError::raiseWarning( 100, 'Please enter a valid API key!' );
 			return;
 		} //end else
 		
@@ -48,11 +46,12 @@ class BraftonArticlesModelKeyInput extends JModel{
 				$this->check_set_feed("author", $author);
 		}
 		else
-			echo "problem entering author";
+			JError::raiseWarning( 101, 'There was a problem setting the author.' );
 		
-		echo "Ready for cron";
+		JFactory::getApplication()->enqueueMessage( 'The importer options have been sucessfully saved.  Your articles have NOT been imported.  Please set up your cron job on the server, or manually call the URL in the script that was provided to you.' );
 	}
 	
+	/* Sets the option for the first time */
 	function set_braf_options($name, $value){
 		$db = & JFactory::getDBO();
 		$query = 'INSERT INTO #__brafton_options  (options_name, options_value) VALUES ("'.$name.'","'.$value.'")';
@@ -60,17 +59,17 @@ class BraftonArticlesModelKeyInput extends JModel{
 		$db->query();								
 	}
 	
+	/* Updates the options.  Not sure why the function is called this but whatever */
 	function check_set_feed($option, $key){
 		$db = & JFactory::getDBO();
 		$query = 'UPDATE #__brafton_options '.
 					 'SET options_value = "'.$key.'"'.
 					 'WHERE options_name = "'. $option .'"';
-			$db->setQuery($query);
-			$db->query();								
+		$db->setQuery($query);
+		$db->query();								
 	}
 	
 	function get_options($name){
-		//$name = "braf_api_key";
 		$db = & JFactory::getDBO();
 		$query = 'SELECT * FROM #__brafton_options  WHERE options_name = "'.$name.'"';
 		$db->setQuery($query);

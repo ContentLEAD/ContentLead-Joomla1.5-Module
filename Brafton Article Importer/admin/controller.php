@@ -17,20 +17,12 @@ class BraftonArticlesController extends JController
 		parent::display($cachable);
 	}
 	
-	/*function author()
+	function setOptions()
 	{
-		$model = $this->getModel('brafton2');
-		if(!$model->delete()) {
-			$msg = JText::_( 'Error Removing Articles' );
-		} else {
-			$msg = JText::_( 'Deleted' );
-		}
-	 
-		$this->setRedirect( 'index.php?option=com_brafton2', $msg );
-	}*/
-	
-	
-	
+		$model = $this->getModel('keyinput');
+		$model->setOptions();
+		$this->setRedirect( 'index.php?option=com_braftonarticles', $msg );
+	}
 	
 	/**
 	 * Experimental feature...don't use me!
@@ -39,7 +31,7 @@ class BraftonArticlesController extends JController
 	 */
 	function remove()
 	{
-		$model = $this->getModel('braftonarticles');
+		$model = $this->getModel('keyinput');
 		if(!$model->delete()) {
 			$msg = JText::_( 'Error Removing Articles' );
 		} else {
@@ -47,7 +39,5 @@ class BraftonArticlesController extends JController
 		}
 	 
 		$this->setRedirect( 'index.php?option=com_braftonarticles', $msg );
-	}
-	
+	}	
 }
-

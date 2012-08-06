@@ -13,14 +13,12 @@ class BraftonArticlesViewKeyInput extends JView
 	
 	function display($tpl = null) 
 	{
-		JToolBarHelper::title(   JText::_( 'Brafton Article Importer' ), 'generic.png' );
-		$this->status = $this->get('API');
-		$this->status = JRequest::getVar('braftonxml_API_input');
+		JToolBarHelper::title('Brafton Article Importer','logo');
+		JHtml::stylesheet('com_braftonarticles/css/style.css', 'media/');
 		parent::display($tpl);
 	}
 
 	function get_options($name){
-		//$name = "braf_api_key";
 		$db = & JFactory::getDBO();
 		$query = 'SELECT * FROM #__brafton_options  WHERE options_name = "'.$name.'"';
 		$db->setQuery($query);

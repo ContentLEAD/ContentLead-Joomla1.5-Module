@@ -62,4 +62,9 @@
 			<filename>models/admin.php</filename>
 		</files>   
 	</administration>	
+	
+	<media destination="com_braftonarticles">
+		<folder>css</folder>
+		<folder>images</folder>
+	</media>
 </install>
