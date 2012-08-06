@@ -9,6 +9,8 @@ jimport('joomla.application.component.view');
 
 class BraftonArticlesViewKeyInput extends JView
 {
+	protected $status; 
+	
 	function display($tpl = null) 
 	{
 		JToolBarHelper::title(   JText::_( 'Brafton Article Importer' ), 'generic.png' );

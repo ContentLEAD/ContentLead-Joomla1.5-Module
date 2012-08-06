@@ -6,7 +6,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.menu');
 jimport('joomla.database.table.category');
 
-class BraftonArticlesModelAdmin extends JModel{
+class BraftonArticlesModelKeyInput extends JModel{
 	
 	protected $status;
 	
