@@ -10,27 +10,20 @@
 	<license>License Info</license>
 	<version>0.5.5</version>
 	<description>Imports articles from Brafton/ContentLEAD/Castleford XML Feeds.</description>
+	<installfile>install.php</installfile>
  
 	<!-- Import site files -->
 	<files folder="site">
 		<filename>controller.php</filename>
 		<filename>braftonarticles.php</filename>
 		<filename>index.html</filename>
-		<filename>models/ApiHandler.php</filename>
-		<filename>models/braftonarticles.php</filename>
-		<filename>models/NewsCategory.php</filename>
-		<filename>models/NewsComment.php</filename>
-		<filename>models/NewsItem.php</filename>
-		<filename>models/Photo.php</filename>
-		<filename>models/PhotoInstance.php</filename>
-		<filename>models/XMLHandler.php</filename>
-		<filename>models/index.html</filename>
-		<filename>views/index.html</filename>
 		<filename>views/articles/index.html</filename>
 		<filename>views/articles/view.html.php</filename>
 		<filename>views/articles/tmpl/default.php</filename>
 		<filename>views/articles/tmpl/index.html</filename>
-		<folder>tables</folder>
+		<filename>views/index.html</filename>
+		<filename>models/braftonarticles.php</filename>
+		<filename>models/index.html</filename>
 	</files>
  
 	<!-- Install SQL tables -->
@@ -61,6 +54,16 @@
 			<filename>views/keyinput/index.html</filename>
 			<filename>views/keyinput/tmpl/default.php</filename>
 			<filename>models/keyinput.php</filename>
+			<filename>models/ApiHandler.php</filename>
+			<filename>models/braftonarticles.php</filename>
+			<filename>models/NewsCategory.php</filename>
+			<filename>models/NewsComment.php</filename>
+			<filename>models/NewsItem.php</filename>
+			<filename>models/Photo.php</filename>
+			<filename>models/PhotoInstance.php</filename>
+			<filename>models/XMLHandler.php</filename>
+			<filename>models/index.html</filename>
+			<folder>tables</folder>
 		</files>   
 	</administration>	
 	

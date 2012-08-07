@@ -34,18 +34,6 @@ class BraftonArticlesController extends JController
 		}
 		parent::display();
 	}
-	
-	/*
-		loadArticles() - REQUIRED FOR BRAFTON ARTICLE IMPORTER
-		This grabs the model code and starts the import of the articles
-		NOTE: This is just the articles, for pictures see below.
-		TODO: Error checking. possible redirect?
-	*/
-	function loadArticles()
-	{
-		$model = $this->getModel('braftonarticles');
-		$model->getXML();
-	}
 
 	/**
 	 * loads pictures
