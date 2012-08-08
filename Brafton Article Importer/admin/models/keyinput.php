@@ -48,7 +48,7 @@ class BraftonArticlesModelKeyInput extends JModel{
 		else
 			JError::raiseWarning( 101, 'There was a problem setting the author.' );
 		
-		JFactory::getApplication()->enqueueMessage( 'The importer options have been sucessfully saved.  Your articles have NOT been imported.  Please set up your cron job on the server, or manually call the URL in the script that was provided to you.' );
+		JFactory::getApplication()->enqueueMessage( 'The importer options have been sucessfully saved.  Your articles have NOT been imported.  Please set up your cron job on the server, or activate the Pseudocron plugin that came with this component.' );
 	}
 	
 	/* Sets the option for the first time */

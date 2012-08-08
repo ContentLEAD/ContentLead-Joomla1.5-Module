@@ -34,20 +34,4 @@ class BraftonArticlesController extends JController
 		}
 		parent::display();
 	}
-
-	/**
-	 * loads pictures
-	 * @return void
-	 */
-	function loadPictures()
-	{
-		$model = $this->getModel('braftonarticles');
-		if(!$model->loadpics()) {
-			$msg = JText::_( 'Error Uploading Pics' );
-		} else {
-			$msg = JText::_( 'Pics successfull uploaded' );
-		}
-	 
-		$this->setRedirect( 'index.php?option=com_braftonarticles', $msg );
-	}
 }

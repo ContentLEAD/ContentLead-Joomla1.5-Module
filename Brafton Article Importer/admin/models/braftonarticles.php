@@ -91,7 +91,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$query = 'SELECT * FROM #__categories ORDER BY id DESC LIMIT 1';
 				$db->setQuery($query);
 				$rows = $db->loadObjectList();
-				$itemrow = $rows[0];		
+				$itemrow = $rows[0];
 
 				$section = $this->enter_section();
 				$query = 'INSERT INTO #__brafton_categories (id, section_id, brafton_cat_id) VALUES ('.$itemrow->id.','.$section.','.$cat_id.')';
@@ -139,19 +139,6 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 	/***********************/
 	/** END 1.5 FUNCTIONS **/
 	/***********************/
-	
-	/*	enter_author()
-	 *	Enter the author into the post.  User will choose!!!
-	 *  PRE: User sets an author.
-	 *  POST: The author set is now the author of all Brafton posts.
-	 */
-	public function enter_author()
-	{
-		$db = & JFactory::getDBO();	
-		$query = 'SELECT name, id FROM #__users';
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-	}
 	
 	public function post_exists($id){
 		$db = & JFactory::getDBO();
@@ -296,7 +283,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 							
 					$query = 'INSERT INTO #__brafton  (id, brafton_id) VALUES ("'.$itemrow->id.'","'.$brafton_id.'")';
 					$db->setQuery($query);
-					$result = $db->loadResult();									
+					$db->query();									
 			}
 			if(self::_TIME)
 			{

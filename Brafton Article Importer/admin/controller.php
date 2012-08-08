@@ -17,7 +17,6 @@ class BraftonArticlesController extends JController
 	{
 		// set default view if not set
 		JRequest::setVar('view', JRequest::getCmd('view','KeyInput'));
-
 		parent::display($cachable);
 	}
 	

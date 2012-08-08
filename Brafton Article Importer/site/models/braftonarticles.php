@@ -6,7 +6,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.modellist');
 
 
-class BraftonModelBrafton extends JModel
+class BraftonArticlesModelBraftonArticles extends JModel
 {	
 	var $_data;
 	
