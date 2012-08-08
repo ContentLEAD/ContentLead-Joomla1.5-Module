@@ -30,7 +30,7 @@ class BraftonArticlesController extends JController
 		{
 			$view = & $this->getView( 'articles', 'html' );
 			$view->setModel( $this->getModel( 'braftonarticles' ), true );
-			$view->display();
+			// $view->display();
 		}
 		parent::display();
 	}
