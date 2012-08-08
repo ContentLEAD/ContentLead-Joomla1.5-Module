@@ -45,7 +45,7 @@ class plgSystemBraftonPseudocron extends JPlugin
 				$params .= 'last_import='.$now."\n";
 				$query = 	'UPDATE #__plugins'.
 							' SET params='.$db->Quote($params).
-							' WHERE element = '.$db->Quote('feedgatorpseudocron').
+							' WHERE element = '.$db->Quote('braftonpseudocron').
 							' AND folder = '.$db->Quote('system').
 							' AND published >= 1';
 				$db->setQuery($query);

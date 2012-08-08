@@ -8,7 +8,7 @@
 	<authorUrl>http://www.brafton.com</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>License Info</license>
-	<version>0.5.5</version>
+	<version>0.6</version>
 	<description>Imports articles from Brafton/ContentLEAD/Castleford XML Feeds.</description>
 	<installfile>install.php</installfile>
  
