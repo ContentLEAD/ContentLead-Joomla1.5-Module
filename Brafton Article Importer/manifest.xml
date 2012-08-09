@@ -11,6 +11,7 @@
 	<version>0.6</version>
 	<description>Imports articles from Brafton/ContentLEAD/Castleford XML Feeds.</description>
 	<installfile>install.php</installfile>
+	<uninstallfile>uninstall.php</uninstallfile>
  
 	<!-- Import site files -->
 	<files folder="site">
@@ -64,6 +65,7 @@
 			<filename>models/XMLHandler.php</filename>
 			<filename>models/index.html</filename>
 			<folder>tables</folder>
+			<folder>controllers</folder>
 		</files>   
 	</administration>	
 	

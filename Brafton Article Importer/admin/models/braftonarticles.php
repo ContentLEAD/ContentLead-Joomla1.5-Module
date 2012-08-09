@@ -256,15 +256,15 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 						$lastPlace = strrpos($pic_base, ".");
 						$pic_base = substr_replace($pic_base, '', $firstPlace - 1, $lastPlace - $firstPlace + 1);
 						
-						$destination_folder = "images/";
+						$destination_folder = COM_MEDIA_BASE . DS;
 						$picURL = $destination_folder . $pic_base;
 						
 						if(!is_null($pic_thumb))
-							$img_thumb = '<img src="'.$pic_thumb.'" border="0" align="left" />';
+							$img_thumb = '<img class="article-thumbnail" style="width:100px; height:auto;" src="'.$picURL.'" border="0" align="left" />';
 						if(!is_null($picURL))
 							$imgURL = '<img class="article-image" src="'.$picURL.'" border="0" align="left" />';
 						
-						$content->introtext = $post_excerpt;
+						$content->introtext = $img_thumb.$post_excerpt;
 						$content->fulltext = $imgURL.'<div class="post-content">'.$_content.'</div>';
 					}		
 													

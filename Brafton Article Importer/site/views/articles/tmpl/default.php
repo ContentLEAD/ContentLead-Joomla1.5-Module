@@ -3,7 +3,7 @@
 	<?php foreach ($this->items as $row): ?>
 		<div class="article-preview article-<?php echo $row->id ?>">
 			<div class="article-title">
-				<a href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$row->id.':'.$row->title); ?>"> 
+				<a href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$row->id.':'.$row->alias); ?>"> 
 					<h1><?php echo $row->title;?></h1>
 				</a>
 			</div>

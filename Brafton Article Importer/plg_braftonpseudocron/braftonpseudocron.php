@@ -31,7 +31,7 @@ class plgSystemBraftonPseudocron extends JPlugin
 
 			if ($diff > $this->interval) {
 	
-				require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_braftonarticles'.DS.'controller'.DS.'pseudocron.php');
+				require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_braftonarticles'.DS.'controllers'.DS.'pseudocron.php');
 				$config = array('base_path'=>JPATH_ADMINISTRATOR.DS.'components'.DS.'com_braftonarticles');
 				$controller = new BraftonArticlesControllerPseudocron($config);
 				
