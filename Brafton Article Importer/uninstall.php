@@ -4,7 +4,13 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.installer.installer');
 jimport('joomla.filesystem.file');
 
-$installer = new JInstaller;
-$src = $this->parent->getPath('source');
-$installer->uninstall($src.DS.'plg_braftonpseudocron');
+// Uninstalls s system plugin named plg_myplugin
+$db->setQuery('SELECT `id` FROM #__plugins WHERE `element` = "braftonpseudocron" AND `folder` = "system"');
+$id = $db->loadResult();
+if($id)
+{
+	$installer = new JInstaller;
+	$result = $installer->uninstall('plugin',$id,1);
+	$status->plugins[] = array('name'=>'plg_srp','group'=>'system', 'result'=>$result);
+}
 ?>
