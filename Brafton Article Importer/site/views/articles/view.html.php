@@ -11,6 +11,7 @@ class BraftonArticlesViewArticles extends JView
 {
 	function display($tpl = null) 
 	{
+		JHtml::stylesheet('com_braftonarticles/css/articles/style.css', 'media/');
 		$items =& $this->get( 'Data');
  
         $this->assignRef( 'items', $items );

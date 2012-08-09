@@ -14,7 +14,7 @@ class BraftonArticlesViewKeyInput extends JView
 	function display($tpl = null) 
 	{
 		JToolBarHelper::title('Brafton Article Importer','logo');
-		JHtml::stylesheet('com_braftonarticles/css/style.css', 'media/');
+		JHtml::stylesheet('com_braftonarticles/css/admin/style.css', 'media/');
 		parent::display($tpl);
 	}
 

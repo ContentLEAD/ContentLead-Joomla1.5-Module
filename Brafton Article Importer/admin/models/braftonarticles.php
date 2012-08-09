@@ -262,10 +262,10 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 						if(!is_null($pic_thumb))
 							$img_thumb = '<img src="'.$pic_thumb.'" border="0" align="left" />';
 						if(!is_null($picURL))
-							$imgURL = '<img src="'.$picURL.'" border="0" align="left" />';
+							$imgURL = '<img class="article-image" src="'.$picURL.'" border="0" align="left" />';
 						
-						$content->introtext = $img_thumb.$post_excerpt;					
-						$content->fulltext = $imgURL.$_content;
+						$content->introtext = $post_excerpt;
+						$content->fulltext = $imgURL.'<div class="post-content">'.$_content.'</div>';
 					}		
 													
 	//				$content->introtext = $post_excerpt;															
