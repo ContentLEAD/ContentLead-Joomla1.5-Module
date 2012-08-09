@@ -256,7 +256,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 						$lastPlace = strrpos($pic_base, ".");
 						$pic_base = substr_replace($pic_base, '', $firstPlace - 1, $lastPlace - $firstPlace + 1);
 						
-						$destination_folder = COM_MEDIA_BASE . DS;
+						$destination_folder = 'images'. DS;
 						$picURL = $destination_folder . $pic_base;
 						
 						if(!is_null($pic_thumb))
