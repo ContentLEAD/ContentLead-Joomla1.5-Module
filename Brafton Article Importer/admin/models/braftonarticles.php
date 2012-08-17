@@ -375,7 +375,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			echo "Total article import time: " .  $total_time . "<br>";
 		}
 		return "Import successful";							
-		
+	}
 	}
 	/******************/
 	/** END getXML() **/
