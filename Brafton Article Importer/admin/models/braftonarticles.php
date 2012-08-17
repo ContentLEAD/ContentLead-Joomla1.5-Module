@@ -38,8 +38,9 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 		$this->_data = $this->_getList( $query );
 		return $this->_data;
 	}
+	
 	public function setrgt($initialrgt) {
-		$db = & JFactory::getDBO();		
+		$db = & JFactory::getDBO();
 		$query = 'UPDATE #__categories SET lft = lft +2, rgt = rgt +2 WHERE rgt > '.$initialrgt.' AND NOT id=1';
 		$db->setQuery($query);
 		$result = $db->loadResult();
@@ -49,7 +50,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 	}
 
 	public function getrgt() {
-		$db = & JFactory::getDBO();					
+		$db = & JFactory::getDBO();
 		$query = 'select rgt from #__categories where id=1';
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -59,23 +60,27 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 	}
 
 	public function enter_category_25($cat,$date) {
-		$db = & JFactory::getDBO();					
+		$db = & JFactory::getDBO();
 		foreach($cat as $catitem) {
 			$cat_id = $catitem->getId();
-			$category = $this->getTable();			
-			$query = "SELECT * FROM #__brafton_categories WHERE brafton_cat_id = $cat_id";	
+			$category = $this->getTable();
+			$query = "SELECT * FROM #__brafton_categories WHERE brafton_cat_id = $cat_id";
 			$db->setQuery($query);
-			$rows = $db->loadObjectList();		
+			$rows = $db->loadObjectList();
 			$itemrow = $rows[0];
 			if(!empty($itemrow)) {
+			// When a category is already in the database...
+			// lft of cat in assets table stays the same
+			// rgt should represent all articles between the category's lft and rft
+			// I want to do this without directly editing the assets table...is it possible?
 				return array("cat_id"=>$itemrow->id, "section"=>0);
-			} else {			
+			} else {
 				$rgt = $this->getrgt();
 
 				$catalias = explode(" ", $catitem->getName());
 				$catalias = implode("-",$catalias);
 
-				$category->title = $catitem->getName(); 			
+				$category->title = $catitem->getName(); 
 				$category->lft = $rgt;
 				$category->rgt = $rgt+1;
 				$category->extension = "com_content";
@@ -89,14 +94,14 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$category->parent_id = 1; 
 				$category->params = '{"target":"","image":""}'; 
 				$category->metadata = '{"page_title":"","author":"","robots":""}'; 
-				$category->created_user_id = 42;	
+				$category->created_user_id = 42;
 				$this->setrgt($rgt);
 				$category->store();
 
 				$query = 'SELECT * FROM #__categories ORDER BY id DESC LIMIT 1';
 				$db->setQuery($query);
 				$rows = $db->loadObjectList();
-				$itemrow = $rows[0];		
+				$itemrow = $rows[0];
 
 				$query = 'INSERT INTO #__brafton_categories (id, brafton_cat_id) VALUES ('.$itemrow->id.','.$cat_id.')';
 				$db->setQuery($query);
@@ -104,14 +109,14 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 
 				return array("cat_id"=>$itemrow->id, "section"=>0);
 			}
-		}		
+		}
 	}
 	/*******************/
 	/** 1.5 FUNCTIONS **/
 	/*******************/
 	public function enter_category($cat,$date){
-		$db = & JFactory::getDBO();				
-		foreach($cat as $catitem){					
+		$db = & JFactory::getDBO();
+		foreach($cat as $catitem){
 			$cat_id = $catitem->getId();
 			$category = $this->getTable();
 
@@ -120,7 +125,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			. " WHERE brafton_cat_id = $cat_id"
 			;	
 			$db->setQuery($query);
-			$rows = $db->loadObjectList();		
+			$rows = $db->loadObjectList();
 			$itemrow = $rows[0];
 			if(!empty($itemrow)){
 				return array("cat_id"=>$itemrow->id, "section"=>$itemrow->section_id);
@@ -132,7 +137,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$query = 'SELECT * FROM #__categories ORDER BY ordering DESC LIMIT 1';
 				$db->setQuery($query);
 				$rows = $db->loadObjectList();
-				$itemrow = $rows[0];		
+				$itemrow = $rows[0];
 				$lastorder = $itemrow->ordering;
 				
 				$query = "SELECT id"
@@ -224,10 +229,10 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 		$query = "SELECT *"
 			. " FROM #__brafton_pics"
 			. " WHERE brafton_id = $id"
-			;			
+			;
 			$db->setQuery($query);
-			$rows = $db->loadObjectList();		
-			$itemrow = $rows[0];		
+			$rows = $db->loadObjectList();
+			$itemrow = $rows[0];
 			return $itemrow->brafton_id;
 	}
 	
@@ -250,8 +255,8 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 		else
 			return JText::_( 'Invalid API key.  Please double check the admin panel!' );
 		
-		$fh = new ApiHandler($API_KEY, "http://api.brafton.com");				
-		$articles = $fh->getNewsHTML();				
+		$fh = new ApiHandler($API_KEY, "http://api.brafton.com");
+		$articles = $fh->getNewsHTML();
 		foreach ($articles as $a) {
 		if(self::_TIME)
 		{
@@ -259,11 +264,11 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			echo "Starting import of article " . $brafton_id . " at " . $article_start . "<br>";
 		}
 		$brafton_id = $a->getId();
-		$apost = $this->post_exists($brafton_id);		
+		$apost = $this->post_exists($brafton_id);
 			if(!$apost)
 			{
 				JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_braftonarticles'.DS.'tables');
-				$content = $this->getTableContent();							
+				$content = $this->getTableContent();
 				$post_title = $a->getHeadline();
 				$time = $a->getCreatedDate();
 				$publish = $a->getPublishDate();
@@ -271,7 +276,6 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$photos = $a->getPhotos();
 				$post_excerpt = $a->getExtract();
 				$category = $a->getCategories();
-	//			$pic_in_intro = $_POST["braftonxml_images"];			
 				$att = "show_title=1 \n".
 					   "link_titles=1 \n".
 					   "show_intro=0 \n".
@@ -302,21 +306,20 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 						$catid = $this->enter_category($category,$post_date);
 					else
 						$catid = $this->enter_category_25($category,$post_date);
-																	
+
 					if(empty($photos)){
 						$content->fulltext = $_content;
-						$content->introtext = $post_excerpt;					
+						$content->introtext = $post_excerpt;
 					}
 					else{
 						if(($photos[0]->getMedium()->getURL() != "NULL")){
 							$pic_thumb = $photos[0]->getSmall()->getURL();
-							$pic_URL = $photos[0]->getMedium()->getURL();												
+							$pic_URL = $photos[0]->getMedium()->getURL();
 						}
 						else{
 							$pic_thumb = $photos[0]->getSmall()->getURL();
-							$pic_URL = $photos[0]->getLarge()->getURL();						
-						}
-						
+							$pic_URL = $photos[0]->getLarge()->getURL();
+
 						$pic_base = basename($pic_URL);
 						// Strip random numbers off of pictures
 						$firstPlace = strpos($pic_base, "_", 0);
@@ -463,7 +466,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 						echo "failed to copy $pic_URL";
 					else
 					{
-						$query = 'INSERT INTO #__brafton (pic_id) VALUES ("' . $brafton_id . '")';
+						$query = 'INSERT INTO #__brafton_pics (brafton_id) VALUES ("' . $brafton_id . '")';
 						$db->setQuery($query);
 						$db->query();
 					}
