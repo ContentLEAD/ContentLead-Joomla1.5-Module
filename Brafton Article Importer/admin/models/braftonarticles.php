@@ -319,7 +319,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 						else{
 							$pic_thumb = $photos[0]->getSmall()->getURL();
 							$pic_URL = $photos[0]->getLarge()->getURL();
-
+						}
 						$pic_base = basename($pic_URL);
 						// Strip random numbers off of pictures
 						$firstPlace = strpos($pic_base, "_", 0);
@@ -375,7 +375,6 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			echo "Total article import time: " .  $total_time . "<br>";
 		}
 		return "Import successful";							
-	}
 	}
 	/******************/
 	/** END getXML() **/
