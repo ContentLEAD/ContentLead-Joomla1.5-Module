@@ -4,6 +4,8 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.menu');
 jimport('joomla.database.table.category');
 ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 $params =& JComponentHelper::getParams('com_media');
 $path = "file_path";
@@ -116,7 +118,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 	/*******************/
 	/** 1.5 FUNCTIONS **/
 	/*******************/
-	public function enter_category($cat,$date){
+	public function enter_category($cat,$date,$section){
 		$db = & JFactory::getDBO();
 		foreach($cat as $catitem){
 			$cat_id = $catitem->getId();
@@ -128,8 +130,8 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			;	
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
-			$itemrow = $rows[0];
-			if(!empty($itemrow)){
+			if(!empty($rows)){
+				$itemrow = $rows[0];
 				return array("cat_id"=>$itemrow->id, "section"=>$itemrow->section_id);
 			}
 			else{			
@@ -167,7 +169,6 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$rows = $db->loadObjectList();
 				$itemrow = $rows[0];
 
-				$section = $this->enter_section();
 				$query = 'INSERT INTO #__brafton_categories (id, section_id, brafton_cat_id) VALUES ('.$itemrow->id.','.$section.','.$cat_id.')';
 				$db->setQuery($query);
 				$db->query();
@@ -183,21 +184,23 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 		$query = 'SELECT * FROM #__sections WHERE title = "News"';
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
-		$itemrow = $rows[0];		
 
-		if(empty($itemrow)){ //if 'News' section doesn't exist 							
+		if(empty($rows)){ //if 'News' section doesn't exist 
 			$section->title =  "News"; 
 			$section->scope = "content";
 			$section->image_position = "left";
 			$section->description = "<p>News</p>";
 			$section->published = 1;
-														
+
 			$query = 'SELECT * FROM #__sections ORDER BY ordering DESC LIMIT 1';
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
-			$itemrow = $rows[0];		
-			
-			$section->ordering = $itemrow->ordering+1;												
+			$news_ordering = 0;
+			if(!empty($rows)) {
+				$itemrow = $rows[0];
+				$news_ordering = $itemrow->ordering;
+			}
+			$section->ordering = $news_ordering + 1;
 			$section->alias = "News";
 			$section->store();		
 
@@ -207,8 +210,10 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			$itemrow = $rows[0];		
 			return $itemrow->id;
 		}
-		else		
+		else {
+			$itemrow = $rows[0];		
 			return $itemrow->id;
+		}
 	}
 	/***********************/
 	/** END 1.5 FUNCTIONS **/
@@ -223,7 +228,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
 			if(empty($rows))
-				return false
+				return false;
 			else
 				return true;
 	}
@@ -237,10 +242,10 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
 			if(empty($rows))
-				return false
+				return false;
 			else
 				return true;
-	
+	}
 	/*************************************/
 	/** This is where the magic happens **/
 	/*************************************/
@@ -308,7 +313,10 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 					$alias = implode("-",$alias_ex);
 					
 					if($version->getShortVersion() < '1.6')
-						$catid = $this->enter_category($category,$post_date);
+					{
+						$section = $this->enter_section();
+						$catid = $this->enter_category($category, $post_date, $section);
+					}
 					else
 						$catid = $this->enter_category_25($category,$post_date);
 
@@ -435,7 +443,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$photo_start = microtime(true);
 				echo "Starting import of photo " . $brafton_id . " at " . $photo_start . "<br>";
 			}
-			JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');	
+			JTable::addIncludePath('JPATH_COMPONENT'.DS.'tables');	
 			$brafton_id = $a->getId();
 			$apost = $this->pic_exists($brafton_id);	
 			if(!$apost)
