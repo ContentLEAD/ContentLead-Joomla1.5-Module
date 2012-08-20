@@ -75,8 +75,8 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			// lft of cat in assets table stays the same
 			// rgt should represent all articles between the category's lft and rft
 			// I want to do this without directly editing the assets table...is it possible?
-				$rgt = $this->getrgt();
-				$query = "UPDATE #__assets SET rgt = " . $rgt . " WHERE id=".$cat_id;
+			//$rgt = $this->getrgt();
+			//$query = "UPDATE #__assets SET rgt = " . $rgt . " WHERE id=".$cat_id;
 				return array("cat_id"=>$itemrow->id, "section"=>0);
 			} else {
 				$rgt = $this->getrgt();
@@ -160,6 +160,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 				$category->published = 1;
 				$category->ordering = $lastorder +1;
 				$category->access = 0; 
+				$category->id = null;
 				if (!$category->store()) {
 					JError::raiseError(500, $row->getError() );
 				}
@@ -178,7 +179,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 	}
 	
 	public function enter_section(){
-		$db = & JFactory::getDBO();					
+		$db = & JFactory::getDBO();
 		$section = $this->setTableSection();
 
 		$query = 'SELECT * FROM #__sections WHERE title = "News"';
@@ -191,7 +192,6 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			$section->image_position = "left";
 			$section->description = "<p>News</p>";
 			$section->published = 1;
-
 			$query = 'SELECT * FROM #__sections ORDER BY ordering DESC LIMIT 1';
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
@@ -202,8 +202,10 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			}
 			$section->ordering = $news_ordering + 1;
 			$section->alias = "News";
-			$section->store();		
-
+			$section->id = null;
+			if (!$section->store()) {
+					JError::raiseError(500, $row->getError() );
+			}
 			$query = 'SELECT id FROM #__sections WHERE title = "News"';
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
@@ -350,8 +352,8 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 						$content->introtext = $img_thumb.$post_excerpt;
 						$content->fulltext = $imgURL.'<div class="post-content">'.$_content.'</div>';
 					}		
-													
-	//				$content->introtext = $post_excerpt;															
+
+	//				$content->introtext = $post_excerpt;
 					$content->title = $post_title;
 					$content->alias = $alias;
 					if($version->getShortVersion() > '1.6')
@@ -359,20 +361,23 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 					$content->publish_up = $publish;
 					$content->attribs = $att;
 					$content->state = 1;
-					$content->catid = $catid['cat_id'];				
-					$content->sectionid = $catid['section'];				
+					$content->catid = $catid['cat_id'];
+					$content->sectionid = $catid['section'];
 					$content->created = $post_date;
 					$content->created_by = $this->get_options("author");
-					$content->store();
+					$content->id = null;
+					if (!$content->store()) {
+						JError::raiseError(500, $row->getError() );
+					}
 				
 					$query = 'SELECT * FROM #__content ORDER BY id DESC LIMIT 1';
 					$db->setQuery($query);
 					$rows = $db->loadObjectList();
-					$itemrow = $rows[0];			
-							
+					$itemrow = $rows[0];
+
 					$query = 'INSERT INTO #__brafton  (id, brafton_id) VALUES ("'.$itemrow->id.'","'.$brafton_id.'")';
 					$db->setQuery($query);
-					$db->query();									
+					$db->query();
 			}
 			if(self::_TIME)
 			{
@@ -387,7 +392,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			$total_time = $time_end - $time_start;
 			echo "Total article import time: " .  $total_time . "<br>";
 		}
-		return "Import successful";							
+		return "Import successful";
 	}
 	/******************/
 	/** END getXML() **/
@@ -448,7 +453,7 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			$apost = $this->pic_exists($brafton_id);	
 			if(!$apost)
 			{
-				$photos = $a->getPhotos();	
+				$photos = $a->getPhotos();
 				if(empty($photos)) 
 				{
 					// No Photos Found
