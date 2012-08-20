@@ -73,6 +73,8 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			// lft of cat in assets table stays the same
 			// rgt should represent all articles between the category's lft and rft
 			// I want to do this without directly editing the assets table...is it possible?
+				$rgt = $this->getrgt();
+				$query = "UPDATE #__assets SET rgt = " . $rgt . " WHERE id=".$cat_id;
 				return array("cat_id"=>$itemrow->id, "section"=>0);
 			} else {
 				$rgt = $this->getrgt();
@@ -219,9 +221,11 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			. " WHERE brafton_id = $id"
 			;			
 			$db->setQuery($query);
-			$rows = $db->loadObjectList();		
-			$itemrow = $rows[0];		
-			return $itemrow->brafton_id;
+			$rows = $db->loadObjectList();
+			if(empty($rows))
+				return false
+			else
+				return true;
 	}
 	
 	public function pic_exists($id){
@@ -232,9 +236,10 @@ class BraftonArticlesModelBraftonArticles extends JModel{
 			;
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
-			$itemrow = $rows[0];
-			return $itemrow->brafton_id;
-	}
+			if(empty($rows))
+				return false
+			else
+				return true;
 	
 	/*************************************/
 	/** This is where the magic happens **/
